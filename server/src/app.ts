@@ -1,8 +1,7 @@
-import express, { Application } from 'express'
+import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import ScenarioRouter from '@routers/scenario'
-import SensorRouter from '@routers/sensor'
+import Posts from '@routers/posts'
 
 const app = express()
 
@@ -17,7 +16,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use(cors())
 
 // Routes
-app.use('/v1/scenarios', ScenarioRouter)
-app.use('/v1/sensors', SensorRouter)
+app.use('/v1/posts', Posts)
 
 export default app
