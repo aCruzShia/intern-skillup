@@ -1,12 +1,7 @@
 import { AnyAction } from 'redux'
+import { POST_ACTIONS, Post } from './postAction'
 
-interface Post {
-  id: string
-  content: string
-  createAt: string
-}
-
-interface PostState {
+export interface PostState {
   postList: Post[]
 }
 
@@ -15,7 +10,11 @@ const initSate = {
 }
 
 export default function postReducer(state: PostState = initSate, action: AnyAction) {
-  switch (action) {
+  switch (action.type) {
+    case POST_ACTIONS.CREATE_POST:
+      return {
+        postList: state.postList.concat([action.payload]),
+      }
     default:
       return state
   }
