@@ -1,24 +1,50 @@
 import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Button from '@material-ui/core/Button'
 
-interface Props {
-  parentCount: number
-}
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}))
 
-export default function Header({ parentCount }: Props) {
+export default function Header() {
+  const classes = useStyles()
   const [count, setCount] = useState<number>(0)
 
   return (
     <div>
-      This is Header component, You have clicked {count} times.
-      <br />
-      <button
-        onClick={() => {
-          setCount(count + 1)
-        }}
-      >
-        Click header
-      </button>
-      <div>Parent has clicked {parentCount} times.</div>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Clicked {count}
+            </Typography>
+            <Button
+              color="inherit"
+              onClick={() => {
+                setCount(count + 1)
+              }}
+            >
+              Login
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
     </div>
   )
 }
