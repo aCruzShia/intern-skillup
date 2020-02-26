@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { StoreState } from './reducers/rootReducer'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -20,6 +22,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Header() {
+  const { postList } = useSelector((state: StoreState) => ({
+    postList: state.posts.postList,
+  }))
   const classes = useStyles()
   const [count, setCount] = useState<number>(0)
 
@@ -32,7 +37,7 @@ export default function Header() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Clicked {count}
+              Clicked {count}, currently {postList.length} Post
             </Typography>
             <Button
               color="inherit"

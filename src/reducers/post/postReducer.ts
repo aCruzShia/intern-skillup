@@ -12,9 +12,8 @@ const initSate = {
 export default function postReducer(state: PostState = initSate, action: AnyAction) {
   switch (action.type) {
     case POST_ACTIONS.CREATE_POST:
-      return {
-        postList: state.postList.concat([action.payload]),
-      }
+      state.postList.push(action.payload)
+      return state
     default:
       return state
   }
