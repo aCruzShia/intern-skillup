@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux'
-import { POST_ACTIONS, Post } from './postAction'
+import { POST_ACTIONS } from './postAction'
+import { Post } from '../../model/post'
 
 export interface PostState {
   postList: Post[]
@@ -14,6 +15,16 @@ export default function postReducer(state: PostState = initSate, action: AnyActi
     case POST_ACTIONS.CREATE_POST:
       state.postList.push(action.payload)
       return state
+    case POST_ACTIONS.GET_POST_LIST_SUCCESS:
+      return {
+        ...state,
+        postList: action.payload,
+      }
+    case POST_ACTIONS.DELETE_POST_SUCCESS:
+      return {
+        ...state,
+        postList: state.postList.filter(post => !action.payload.includes(post.id)),
+      }
     default:
       return state
   }

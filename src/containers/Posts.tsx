@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
@@ -6,11 +6,13 @@ import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
 import Avatar from '@material-ui/core/Avatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import { createPostAction } from '../reducers/post/postAction'
+import { createPostAction, getPostList, deletePost } from '../reducers/post/postAction'
 import { StoreState } from '../reducers/rootReducer'
-import { v4 } from 'uuid'
 
 export default function Posts() {
   const dispatch = useDispatch()
@@ -19,21 +21,34 @@ export default function Posts() {
   }))
 
   const [content, setContent] = useState<string>('')
+
+  useEffect(() => {
+    dispatch(getPostList())
+  }, [dispatch])
+
   const handleClick = () => {
     dispatch(
       createPostAction({
-        id: v4(),
         content,
-        createAt: new Date().toUTCString(),
       }),
     )
     setContent('')
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    setContent(value)
-  }
+  const handleDelete = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      dispatch(deletePost([e.currentTarget.dataset['postId']!]))
+    },
+    [dispatch],
+  )
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setContent(value)
+    },
+    [setContent],
+  )
 
   return (
     <Container maxWidth="md">
@@ -52,7 +67,7 @@ export default function Posts() {
       <Button onClick={handleClick} color="primary">
         Submit
       </Button>
-      <p>
+      <div>
         Posts
         <List component="nav" aria-label="contacts">
           {postList.map((post, idx) => (
@@ -64,10 +79,15 @@ export default function Posts() {
                 />
               </ListItemAvatar>
               <ListItemText id={post.id} primary={post.content} />
+              <ListItemSecondaryAction data-post-id={post.id} onClick={handleDelete}>
+                <IconButton edge="end" aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>
-      </p>
+      </div>
     </Container>
   )
 }

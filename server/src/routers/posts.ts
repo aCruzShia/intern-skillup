@@ -4,21 +4,21 @@ import uuid from 'uuid/v4'
 const fakeData = [
   {
     id: uuid(),
-    content: 'abc',
+    content: 'this is my post',
     created_at: '2019-12-19T11:22:33Z',
     updated_at: new Date().toISOString(),
     imageUrl: 'https://source.unsplash.com/random',
   },
   {
     id: uuid(),
-    content: 'def',
+    content: 'omg I am twitting right now?',
     created_at: '2019-12-19T11:22:33Z',
     updated_at: new Date().toISOString(),
     imageUrl: 'https://source.unsplash.com/random',
   },
   {
     id: uuid(),
-    content: 'ghi',
+    content: 'gogo bro',
     created_at: '2019-12-19T11:22:33Z',
     updated_at: new Date().toISOString(),
     imageUrl: 'https://source.unsplash.com/random',

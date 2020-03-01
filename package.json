@@ -21,6 +21,8 @@
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.4",
     "typescript": "^3.7.5",
     "uuid": "^3.4.0"
   },
@@ -47,5 +49,6 @@
   },
   "devDependencies": {
     "redux-logger": "^3.0.6"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
